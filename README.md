@@ -227,3 +227,101 @@ pnpm dev --tunnel-url https://randomly-generated-hostname.trycloudflare.com:3000
 - [App authentication](https://shopify.dev/apps/auth)
 - [Shopify CLI](https://shopify.dev/apps/tools/cli)
 - [Shopify API Library documentation](https://github.com/Shopify/shopify-api-js#readme)
+
+
+
+# TrackSell
+
+### Now owned by Slopfy
+
+Current Versions
+
+- Node: `14.17.5`
+- NPM: `6.14.14`
+
+## First-time Setup
+
+1. Install packages
+
+```bash
+  yarn install
+```
+
+2. Create `.env` file
+
+- use the `.env.example` file and fill in the missing fields
+- leave `HOST` and `NEXT_PUBLIC_HOST` until next step
+
+3. Create a `.env` file in `tracking-page/`
+
+- use the `tracking-page\.env.example` file and fill in the missing fields
+
+4. Create Ship24 account for API key and secret
+
+- accept pricing for $0.00 Tracking API & Webhook plan
+- get your API key from https://dashboard.ship24.com/integrations/api-keys
+
+## Dev
+
+1. Create ngrok terminal
+
+```bash
+  ngrok http 3000
+```
+
+2. Update `.env` file with ngrok URL
+
+- replace `HOST` **and** `NEXT_PUBLIC_HOST`, they should have identical values
+
+3. Update your Shopify app URLs
+
+- App URL: `https://xxxx.ngrok.io/`
+- Allowed redirection URL(s): `https://xxxx.ngrok.io/auth/callback`
+- App proxy: `https://xxxx.ngrok.io/tracking-page`
+
+https://fuhr.ngrok.io/install/auth/callback
+https://fuhr.ngrok.io/auth/callback
+https://fuhr.ngrok.io/auth/shopify/callback
+
+![App Screenshot](https://i.ibb.co/9pKhKJY/2022-01-21-145010.png)
+
+4. Run the app :)
+
+Terminal 1 (Main app)
+
+```bash
+  yarn dev
+```
+
+Terminal 2 (Tracking page)
+
+```bash
+  cd tracking-page && yarn dev
+```
+
+4. Update Ship24 webhook URL
+
+- https://prnt.sc/26gxljj
+- https://dashboard.ship24.com/integrations/webhook
+
+  > NOTE: you must have the app running before updating the Ship24 webhook URL or else Ship24 won't let you update it
+
+# Creating Shipments
+
+To add a shipement through the tracking-page it needs to exist as an Order through Shopify.
+
+1. On Shopify admin for your dev store, go to Orders > Draft Orders
+2. Create an order with a single product. Go through the creation until you get to the fulfillment
+3. When you go to fulfill an item you can add tracking info. This is where you can enter an example tracking number (ex: `LY587900865CN`)
+4. On the tracking-page you should be able to search for the shipment via the tracking number or order number (Note: Shopify order requires an email for this option)
+
+You can find a list of example tracking numbers in `test-data\Example Tracking Numbers.txt`
+
+## Deployment
+
+All deployment is automatically managed using GitHub Actions (CI/CD). Any code that is merged into `staging` or `production` will be deployed to the respective environments.
+
+Merge code into `staging` frequently :)
+
+> ⚠️ Don't merge any code into production that you don't want to be live on production. If you accidentally include changes, revert the commit and let the Action run again.
+
