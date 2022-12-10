@@ -14,7 +14,8 @@
   "dependencies": {
     "@shopify/app": "3.25.0",
     "@shopify/cli": "3.25.0",
-    "date-fns": "^2.29.3"
+    "date-fns": "^2.29.3",
+    "mongoose": "^6.8.0"
   },
   "author": "reecebernard"
 }

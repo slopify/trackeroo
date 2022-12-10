@@ -34,28 +34,26 @@ const Plan: React.FC = () => {
 
     return (
         Boolean(data) && (
-            <Page>
+            <Page >
                 <Layout>
-                        <Layout>
-                            <Layout.Section>
-                                <Heading element="h1" color="#121212">
-                                    Current Plan
-                                </Heading>
-                            </Layout.Section>
-                            <Layout.Section fullWidth>
-                                <Card>
-                                    <PlanTable
-                                        plan={data.shopBillingDetails.billing.plan}
-                                        shipments={data.shopBillingDetails.shipments}
-                                        isTrial={isAfter(new Date(data.shopBillingDetails.billing.trialEnd), new Date())}
-                                    />
-                                </Card>
-                            </Layout.Section>
-                            <Layout.Section>
-                                <BillingPlans isFirstTime={isFirstTime} activePlan={data.shopBillingDetails.billing.plan} />
-                            </Layout.Section>
-                            <Layout.Section></Layout.Section>
-                        </Layout>
+                    <Layout.Section>
+                        <Heading element="h1" color="#121212">
+                            Current Plan
+                        </Heading>
+                    </Layout.Section>
+                    <Layout.Section fullWidth>
+                        <Card>
+                            <PlanTable
+                                plan={data.shopBillingDetails.billing.plan}
+                                shipments={data.shopBillingDetails.shipments}
+                                isTrial={isAfter(new Date(data.shopBillingDetails.billing.trialEnd), new Date())}
+                            />
+                        </Card>
+                    </Layout.Section>
+                    <Layout.Section>
+                        <BillingPlans isFirstTime={isFirstTime} activePlan={data.shopBillingDetails.billing.plan} />
+                    </Layout.Section>
+                    <Layout.Section></Layout.Section>
                 </Layout>
             </Page>
         )

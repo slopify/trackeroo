@@ -5,7 +5,7 @@ import Heading from '../components/Plans/Heading';
 
 const Tutorials: React.FC = () => {
     return (
-        <Page>
+        <Page narrowWidth>
             <Layout>
                 <Layout.Section>
                     <Heading element="h1" color="#121212">
