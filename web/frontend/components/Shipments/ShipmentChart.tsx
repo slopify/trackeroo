@@ -1,9 +1,9 @@
 import React, { createElement, useMemo, useState } from 'react';
-import { SkeletonDisplayText } from '@shopify/polaris';
+import { SkeletonDisplayText, Spinner } from '@shopify/polaris';
 import { ColumnChart, LineChart } from 'react-chartkick';
 import 'chartkick/chart.js';
-import ChartTypeToggle from '@components/ChartTypeToggle/index';
-import randomHash from '@utils/randomHash';
+//import ChartTypeToggle from '@components/ChartTypeToggle/index';
+import randomHash from '../../helpers/randomHash';
 import { format } from 'date-fns';
 
 interface ChartProps {
@@ -53,17 +53,17 @@ const Chart: React.FC<ChartProps> = ({ loading, switcher, title, dataSet, colors
   const typeChangeHandler = () => setActiveToggleType((currentType) => (currentType === 'line' ? 'column' : 'line'));
 
   return (
-    <div className={styles.Chart}>
-      <div className={styles.Chart__heading}>
-        <div className={styles.Chart__title}>{loading ? <SkeletonDisplayText size="medium" /> : title}</div>
-        {switcher && (
+    <div>
+      <div>
+        <div>{loading ? <SkeletonDisplayText size="medium" /> : title}</div>
+        {/* {switcher && (
           <div className={styles.Chart__switcher}>
             <ChartTypeToggle id={switcherId} onChange={typeChangeHandler} checked={activeToggleType === 'line'} />
           </div>
-        )}
+        )} */}
       </div>
       {loading ? (
-        <div className={styles.Chart__loader_wrapper}>{/* <Loader/>*/}</div>
+        <Spinner />
       ) : (
         chart.hasOwnProperty(activeToggleType) &&
         createElement(chart[activeToggleType], {

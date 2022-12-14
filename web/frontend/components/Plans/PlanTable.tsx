@@ -1,5 +1,5 @@
 import React, { FC, useMemo } from 'react';
-import { DataTable } from '@shopify/polaris';
+import { DataTable, ProgressBar } from '@shopify/polaris';
 import { BILLING_PLANS } from '../../constants/constants';
 import { pluralize } from '../../helpers/pluralize';
 
@@ -28,7 +28,7 @@ function getTablesRows({ plan, shipments, isTrial }: TPlanTableProps) {
       </React.Fragment>,
       `$${planDetails.price || 0}/month`,
     ],
-    ['Current Usage', `${shipments} ${pluralize('shipment', shipments)} this month`, `+$${additionalPayment}`],
+    ['Current Usage',<ProgressBar progress={2/50*100} />, `${shipments} ${pluralize('shipment', shipments)} this month`, `+$${additionalPayment}`],
   ];
 }
 

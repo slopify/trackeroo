@@ -25,6 +25,10 @@ export default function App() {
                                     destination: "/shipments",
                                 },
                                 {
+                                    label: "Tracking Page",
+                                    destination: "/trackingPage",
+                                },
+                                {
                                     label: "Plans",
                                     destination: "/plans",
                                 },
