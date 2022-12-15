@@ -31,9 +31,11 @@ interface TitleBlockProps {
 const TitleBlock: React.FC<TitleBlockProps> = ({ title, price, description, img }) => {
     return (
         <Stack>
-            <Thumbnail size="large" source={img} alt="" />
+            <div style={{ border: '1pt solid rgba(0, 128, 96, 1);' }}>
+                <img src={img} alt="" />
+            </div>
             <div >
-                <p >{title.toUpperCase()}</p>
+                <p styles>{title.toUpperCase()}</p>
                 <p >
                     <span >$</span>
                     <span >{price}</span>
@@ -50,25 +52,44 @@ const BillingCard: React.FC<TBillingCardProps> = ({ benefitList, isChecked = fal
     const title = useMemo(() => <TitleBlock {...props} />, [props]);
 
     return (
-        <div>
-            <Card
-                title={title}
-                primaryFooterAction={{
-                    ...buttonProps,
-                    disabled: active ? true : buttonProps.disabled,
-                }}
-            >
-                <Card.Section>
-                    <List>
-                        {benefitList.map((benefit) => (
-                            <List.Item key={benefit}>{benefit}</List.Item>
-                        ))}
-                    </List>
-                </Card.Section>
-                <Card.Section>
-                </Card.Section>
-            </Card>
-        </div>
+        <div style={{
+            marginTop: '10pt',
+            minWidth: '220pt',
+            minHeight: '250pt',
+            backgroundColor: 'white',
+            borderRadius: '20pt'
+        }}>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: '5pt' }}>
+                <div style={{ marginTop: '15pt', borderStyle: 'solid', borderColor: 'rgba(0, 128, 96, 1)', borderWidth: '1pt' }}>
+                    <Thumbnail size="large" source={props.img} alt="" />
+                </div>
+                <div style={{ marginTop: '15pt', }}>
+                    <p style={{ fontWeight: 'bold' }}>{props.title.toUpperCase()}</p>
+                    <p >
+                        <span >$</span>
+                        <span >{props.price}</span>
+                        <span >/ mo</span>
+                    </p>
+                    <div >{props.description}</div>
+                </div>
+            </div>
+
+            <div>
+                <ul>
+                    {benefitList.map((benefit) => (
+                        <li key={benefit}>{benefit}</li>
+                    ))}
+                </ul>
+            </div>
+            <div style={{padding:'25pt'}}></div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+                    <Button
+                        primary
+                        onClick={buttonProps.onAction}
+                        disabled={active ? true : buttonProps.disabled}
+                >{buttonProps.content}</Button>
+            </div>
+        </div >
     );
 };
 

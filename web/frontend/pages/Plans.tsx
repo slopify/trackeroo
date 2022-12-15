@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Page, Layout, TextContainer, Spinner } from "@shopify/polaris";
-import { TitleBar } from "@shopify/app-bridge-react";
 import { useAppQuery } from "../hooks";
 import Heading from '../components/Plans/Heading';
 import PlanTable from '../components/Plans/PlanTable'
@@ -15,7 +14,7 @@ interface TGetBillingDetails {
 
 const Plan: React.FC = () => {
 
-    //  const { isFetching, data } = useAppQuery<TGetBillingDetails>(GET_BILLING_DETAILS);
+    // const { isFetching, data } = useAppQuery<TGetBillingDetails>(GET_BILLING_DETAILS);
     const isFetching = false
     const data = {
         shopBillingDetails: {
@@ -34,14 +33,14 @@ const Plan: React.FC = () => {
 
     return (
         Boolean(data) && (
-            <Page >
+            <Page fullWidth>
                 <Layout>
                     <Layout.Section>
                         <Heading element="h1" color="#121212">
                             Current Plan
                         </Heading>
                     </Layout.Section>
-                    <Layout.Section fullWidth>
+                    <Layout.Section >
                         <Card>
                             <PlanTable
                                 plan={data.shopBillingDetails.billing.plan}
