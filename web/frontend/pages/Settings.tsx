@@ -81,16 +81,6 @@ const Settings: React.FC = () => {
 
                         <Layout.Section><SettingCheckboxCard
                             onChange={onChangeCheckbox}
-                            label="Notifications"
-                            name="notifications"
-                            checked={true}
-                            disabled={false}
-                            noAccess={false}
-                            description="Use Shopify’s shipping template to send notifications when packages are Out for Delivery and Delivered."
-                        /></Layout.Section>
-
-                        <Layout.Section><SettingCheckboxCard
-                            onChange={onChangeCheckbox}
                             label="Tracking URL"
                             name="trackingUrl"
                             checked={true}

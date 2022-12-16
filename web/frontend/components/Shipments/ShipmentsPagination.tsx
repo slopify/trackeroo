@@ -16,7 +16,7 @@ interface ShipmentsPaginationProps {
 
 const styles = {
     ShipmentsPagination: {
-        borderTop: '1px solid $light-grey',
+        borderTop: '1px solid grey',
         display: 'flex',
         alignItems: 'center',
         padding: '10px 30px',

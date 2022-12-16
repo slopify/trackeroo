@@ -221,7 +221,7 @@ const Shipments: React.FC = () => {
                                         setDestinations={setDestinations}
                                     />
                                     {loading ? (
-                                        <div>
+                                        <div style={{display: 'flex', justifyContent:'center', paddingBottom: '50pt'}}>
                                             <Spinner size="large" />
                                         </div>
                                     ) : (
