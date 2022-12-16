@@ -6,7 +6,8 @@ import {
     Image,
     Stack,
     Link,
-    DataTable
+    DataTable,
+    Banner
 } from "@shopify/polaris";
 
 import { StatusNew } from '../constants/constants';
@@ -14,8 +15,18 @@ import Heading from '../components/Plans/Heading';
 
 import { trophyImage } from "../assets";
 import Chart from "../components/Shipments/ShipmentChart";
+import { useState } from "react";
 
 export default function HomePage() {
+    const [showSetUpBanner, setShowSetUpBanner] = useState(true)
+
+    const handleSuccessBannerDismiss = () => {
+        setShowSetUpBanner(false)
+        // query to perm make false.
+    }
+
+
+
     return (
         <Page>
             <Layout>
@@ -27,6 +38,14 @@ export default function HomePage() {
                         </span>
                     </Heading>
                 </Layout.Section>
+
+                {showSetUpBanner && <Banner
+                    title="Your tracking page has been made successfully. You will need to add it to your navbar for customers to access."
+                    status="success"
+                    action={{ content: 'View tracking page' }}
+                    secondaryAction={{content: 'Watch set up tutorial'}}
+                    onDismiss={() => handleSuccessBannerDismiss()}
+                />}
 
                 <Layout.Section>
                     <Card sectioned>

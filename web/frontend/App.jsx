@@ -1,6 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import { NavigationMenu } from "@shopify/app-bridge-react";
 import Routes from "./Routes";
+import { CustomIntercomProvider } from './components/providers/CustomIntercomProvider'
 
 import {
     AppBridgeProvider,
@@ -18,6 +19,7 @@ export default function App() {
             <BrowserRouter>
                 <AppBridgeProvider>
                     <QueryProvider>
+                        <CustomIntercomProvider>
                         <NavigationMenu
                             navigationLinks={[
                                 {
@@ -43,6 +45,7 @@ export default function App() {
                             ]}
                         />
                         <Routes pages={pages} />
+                        </CustomIntercomProvider>
                     </QueryProvider>
                 </AppBridgeProvider>
             </BrowserRouter>

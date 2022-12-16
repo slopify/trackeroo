@@ -324,7 +324,8 @@ export const BILLING_PLANS = {
   Basic: {
     name: 'Basic',
     title: 'Basic',
-    subDescription: '50 free shipments per month, but no extra shipments',
+    subDescription: '50 free shipments per month',
+    extraShipments: 'No extra shimpments',
     price: 0,
     benefitList: ['Order Lookup', 'Branded Tracking Page', 'Unlimited Custom Statuses', 'UPS, USPS, & Fedex'],
     img: '/assets/images/shoppingKart.png',
@@ -332,7 +333,8 @@ export const BILLING_PLANS = {
   Essentials: {
     name: 'Essentials',
     title: 'Essentials',
-    subDescription: '100 free shipments per month + $0.08 per extra shipment',
+    subDescription: '100 free shipments per month',
+    extraShipments: '$0.08 per extra shipment, max 500',
     price: 9.99,
     benefitList: [
       'All basic features',
@@ -345,7 +347,8 @@ export const BILLING_PLANS = {
   Professional: {
     name: 'Professional',
     title: 'Professional',
-    subDescription: '500 free shipments per month + $0.06 per extra shipment',
+    subDescription: '500 free shipments per month',
+    extraShipments: '$0.06 per extra shipment, max 5,000',
     price: 34.99,
     benefitList: [
       'All essential features',
@@ -358,7 +361,8 @@ export const BILLING_PLANS = {
   Enterprise: {
     name: 'Enterprise',
     title: 'Enterprise',
-    subDescription: '3000 free shipments per month + $0.04 per extra shipment',
+    subDescription: '3000 free shipments per month',
+    extraShipments: '$0.04 per extra shipment',
     price: 119.99,
     benefitList: [
       'All professional features',

@@ -26,6 +26,7 @@ function getTablesRows({ plan, shipments, isTrial }: TPlanTableProps) {
         {planDetails.description}
         <p>{planDetails.subDescription}</p>
       </React.Fragment>,
+      `${planDetails.extraShipments}`,
       `$${planDetails.price || 0}/month`,
     ],
     ['Current Usage',<ProgressBar progress={2/50*100} />, `${shipments} ${pluralize('shipment', shipments)} this month`, `+$${additionalPayment} extra shipments tracked`],

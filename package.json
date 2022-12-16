@@ -12,6 +12,7 @@
     "deploy": "shopify app deploy"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.2",
     "@shopify/app": "3.25.0",
     "@shopify/cli": "3.25.0",
     "@shopify/shopify-app-session-storage-mongodb": "^1.0.0",
@@ -20,8 +21,10 @@
     "css2json": "^1.1.1",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
+    "graphql": "^15.8.0",
     "mongoose": "^6.8.0",
     "react-chartkick": "^0.5.3",
+    "react-use-intercom": "^2.0.0",
     "type-graphql": "^1.1.1"
   },
   "author": "reecebernard"

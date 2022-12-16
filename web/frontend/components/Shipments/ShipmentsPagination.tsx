@@ -14,6 +14,25 @@ interface ShipmentsPaginationProps {
     limit: number;
 }
 
+const styles = {
+    ShipmentsPagination: {
+        borderTop: '1px solid $light-grey',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '10px 30px',
+    },
+    ShipmentsPaginationButtons: {
+        margin: '0 auto',
+        maxWidth: '36px',
+    },
+    ShipmentsPaginationCount : {
+        color: 'grey',
+        fontSize: '12px',
+        fontWeight: '600',
+        letterSpacing: '.4px',
+    }
+}
+
 
 const ShipmentsPagination: React.FC<ShipmentsPaginationProps> = ({
     page,
@@ -25,14 +44,14 @@ const ShipmentsPagination: React.FC<ShipmentsPaginationProps> = ({
     hasPrev,
 }) => {
     return (
-        <div >
-            <div >
+        <div style={styles.ShipmentsPagination}>
+        <div style={styles.ShipmentsPaginationButtons}>
                 <ButtonGroup segmented>
                     <Button onClick={() => onPagination(PaginationDirection.Prev)} icon={ArrowLeftMinor} disabled={!hasPrev} />
                     <Button onClick={() => onPagination(PaginationDirection.Next)} icon={ArrowRightMinor} disabled={!hasNext} />
                 </ButtonGroup>
             </div>
-            <span >
+            <span style={styles.ShipmentsPaginationCount}>
                 Showing {(page - 1) * limit + count} of {total} results
             </span>
         </div>
