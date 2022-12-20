@@ -114,15 +114,21 @@ const ShipmentsTable: React.FC<ShipmentsTableProps> = ({ shipments, newStatuses 
     //     [shipments, data?.shop.myshopifyDomain, newStatuses],
     //   );
 
-    const rows = ""
+    const rows = [['order1', 'fdsvsd', 'usps', 'leaving factory', '12-01', 'out for del'],
+    ['order2', 'ds', 'usps', 'leaving factory', '12-01', 'out for del'],
+    ['order3', 'sdf', 'usps', 'leaving factory', '12-01', 'out for del'],
+    ['order4', 'vrte', 'usps', 'leaving factory', '12-01', 'out for del'],
+    ['order5', 'bhte', 'usps', 'leaving factory', '12-01', 'out for del']
+]
 
     return (
         <div>
             <DataTable
                 columnContentTypes={['text', 'text', 'text', 'text', 'text', 'text']}
                 headings={['Order', 'Tracking Number', 'Courier', 'Last Event', 'Order Date', 'Status']}
-                rows={[]}
+                rows={rows}
                 verticalAlign="middle"
+                hasZebraStripingOnData
             />
         </div>
     );

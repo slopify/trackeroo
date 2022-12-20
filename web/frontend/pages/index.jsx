@@ -9,21 +9,39 @@ import {
     DataTable,
     Banner
 } from "@shopify/polaris";
+// import { useIntercom } from 'react-use-intercom';
 
 import { StatusNew } from '../constants/constants';
 import Heading from '../components/Plans/Heading';
 
 import { trophyImage } from "../assets";
 import Chart from "../components/Shipments/ShipmentChart";
-import { useState } from "react";
+import React, { useState, useCallback } from "react";
+
 
 export default function HomePage() {
-    const [showSetUpBanner, setShowSetUpBanner] = useState(true)
+
+    const [showSetUpBanner, setShowSetUpBanner] = useState(true);
+    const [showBrandingBanner, setShowBrandingBanner] = useState(true);
 
     const handleSuccessBannerDismiss = () => {
         setShowSetUpBanner(false)
         // query to perm make false.
     }
+
+    const handleInfoBannerDismiss = () => {
+        setShowBrandingBanner(false)
+        // query to perm make false.
+    }
+    //const { showNewMessages } = useIntercom();
+
+    const showNewMessages = () => {
+        console.log('pull up intercom')
+    }
+
+    const handleBrandingClick = useCallback(() => {
+        showNewMessages("Hi, I'm looking to remove the Trackeroo branding from my tracking page!");
+    }, [showNewMessages]);
 
 
 
@@ -39,13 +57,22 @@ export default function HomePage() {
                     </Heading>
                 </Layout.Section>
 
-                {showSetUpBanner && <Banner
+                {showSetUpBanner && <Layout.Section><Banner
                     title="Your tracking page has been made successfully. You will need to add it to your navbar for customers to access."
                     status="success"
-                    action={{ content: 'View tracking page' }}
-                    secondaryAction={{content: 'Watch set up tutorial'}}
+                    action={{ content: 'View tracking page', url: '/trackingpage' }}
+                    secondaryAction={{ content: 'Watch set up tutorial', url: 'https://www.loom.com/share/0d876c74dd664690923b352da35ad98a' }}
                     onDismiss={() => handleSuccessBannerDismiss()}
-                />}
+                /></Layout.Section>}
+
+                {showBrandingBanner && <Layout.Section><Banner
+                    title="Remove Trackeroo branding for FREE 👀"
+                    status="info"
+                    action={{ content: 'Remove Branding', onAction: handleBrandingClick }}
+                    onDismiss={() => handleInfoBannerDismiss()}
+                >
+                    <p>Contact support to get &quot;Powered by Trackeroo&quot; branding removed from your tracking page for FREE.</p>
+                </Banner></Layout.Section>}
 
                 <Layout.Section>
                     <Card sectioned>

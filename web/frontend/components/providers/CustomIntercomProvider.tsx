@@ -6,33 +6,33 @@ import { useAppQuery } from '../../hooks'
 
 
 const IntercomInitializer = () => {
-  const { isLoading:loading, error, data:shop } = useAppQuery({
-      url: '/api/user'
-  });
-
-  console.log(shop);
-  //const { hasPrioritySupport, loading: loadingSupportPriority } = useHasPrioritySupport();
-  const { boot } = useIntercom();
-
-  useEffect(() => {
-    if (!shop?.myshopifyDomain || loading) return;
-    boot({
-      userId: shop.myshopifyDomain,
-      email: shop.email,
-    //   customAttributes: {
-    //     priority_support: hasPrioritySupport,
-    //   },
+    const { isLoading: loading, error, data: shop } = useAppQuery({
+        url: '/api/user'
     });
-  }, [boot, shop?.myshopifyDomain, shop?.email, loading]);
+    //const { hasPrioritySupport, loading: loadingSupportPriority } = useHasPrioritySupport();
+    const { boot } = useIntercom();
 
-  return null;
+    useEffect(() => {
+        if (!shop?.myshopifyDomain || loading) return;
+        boot({
+            userId: shop.myshopifyDomain,
+            email: shop.email,
+            //   customAttributes: {
+            //     priority_support: hasPrioritySupport,
+            //   },
+        });
+    }, [boot, shop?.myshopifyDomain, shop?.email, loading]);
+
+    return null;
 };
 
+
 export const CustomIntercomProvider: FC = ({ children }) => {
-  return (
-    <IntercomProvider appId={process.env.INTERCOM_APP_ID}>
-      <IntercomInitializer />
-      {children}
-    </IntercomProvider>
-  );
+    return (
+        <IntercomProvider appId={process.env.INTERCOM_APP_ID}>
+            <><IntercomInitializer />
+                {children}
+            </>
+        </IntercomProvider>
+    );
 };

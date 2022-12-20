@@ -231,8 +231,8 @@ const Shipments: React.FC = () => {
                                                 onPagination={onPagination}
                                                 page={page}
                                                 limit={SHIPMENTS_LIMIT}
-                                                total={1}
-                                                count={1}
+                                                total={6}
+                                                count={6}
                                                 hasNext={false}
                                                 hasPrev={false}
                                             />
