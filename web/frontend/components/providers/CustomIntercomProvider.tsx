@@ -2,34 +2,29 @@
 import React, { FC, useEffect } from 'react';
 import { IntercomProvider, useIntercom } from 'react-use-intercom';
 import { GET_CURRENT_USER } from '../schemas/shopify/shop.schema';
-import { useAppQuery } from '../../hooks'
-
+import { useAppQuery } from '../../hooks';
 
 const IntercomInitializer = () => {
     const { isLoading: loading, error, data: shop } = useAppQuery({
         url: '/api/user'
     });
-    //const { hasPrioritySupport, loading: loadingSupportPriority } = useHasPrioritySupport();
     const { boot } = useIntercom();
+    console.log(process.env)
 
     useEffect(() => {
-        if (!shop?.myshopifyDomain || loading) return;
+        if (!shop?.domain || loading) return;
         boot({
-            userId: shop.myshopifyDomain,
-            email: shop.email,
-            //   customAttributes: {
-            //     priority_support: hasPrioritySupport,
-            //   },
+            userId: shop.domain,
+            email: shop.email
         });
-    }, [boot, shop?.myshopifyDomain, shop?.email, loading]);
-
+    }, [boot, shop?.domain, shop?.email, loading]);
     return null;
 };
 
 
 export const CustomIntercomProvider: FC = ({ children }) => {
     return (
-        <IntercomProvider appId={process.env.INTERCOM_APP_ID}>
+        <IntercomProvider appId={"okqa3wwq"}>
             <><IntercomInitializer />
                 {children}
             </>

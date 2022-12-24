@@ -6,6 +6,7 @@ import serveStatic from "serve-static";
 import { setUpShopify } from "./shopify";
 import GDPRWebhookHandlers from "./gdpr";
 import 'dotenv/config'
+import { ShopModel } from "./schemas/Shop";
 
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
@@ -36,15 +37,14 @@ setUpShopify().then((shopify) => {
     app.use(express.json());
 
     app.get("/api/user", async (_req, res) => {
-        console.log(res.locals.shopify.session)
-        res.status(200);
+        const data = await ShopModel.findOne({ domain: res.locals.shopify.session.shop })
+        res.status(200).send(data);
     });
 
 
     app.use(serveStatic(STATIC_PATH, { index: false }));
 
     app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
-        console.log(_req.query)
         return res
             .status(200)
             .set("Content-Type", "text/html")
