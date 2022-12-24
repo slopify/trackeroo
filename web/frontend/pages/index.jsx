@@ -17,6 +17,7 @@ import Heading from '../components/Plans/Heading';
 import { trophyImage } from "../assets";
 import Chart from "../components/Shipments/ShipmentChart";
 import React, { useState, useCallback } from "react";
+import { useIntercom } from 'react-use-intercom';
 
 
 export default function HomePage() {
@@ -33,11 +34,7 @@ export default function HomePage() {
         setShowBrandingBanner(false)
         // query to perm make false.
     }
-    //const { showNewMessages } = useIntercom();
-
-    const showNewMessages = () => {
-        console.log('pull up intercom')
-    }
+    const { showNewMessages } = useIntercom();
 
     const handleBrandingClick = useCallback(() => {
         showNewMessages("Hi, I'm looking to remove the Trackeroo branding from my tracking page!");
