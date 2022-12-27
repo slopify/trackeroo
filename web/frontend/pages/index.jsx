@@ -13,6 +13,7 @@ import {
 
 import { StatusNew } from '../constants/constants';
 import Heading from '../components/Plans/Heading';
+import { ShipmentsOverview } from '../components/Shipments/ShipmentsOverview'
 
 import { trophyImage } from "../assets";
 import Chart from "../components/Shipments/ShipmentChart";
@@ -71,17 +72,7 @@ export default function HomePage() {
                     <p>Contact support to get &quot;Powered by Trackeroo&quot; branding removed from your tracking page for FREE.</p>
                 </Banner></Layout.Section>}
 
-                <Layout.Section>
-                    <Card sectioned>
-                        <Heading>Shipment Overview</Heading>
-                        <DataTable
-                            columnContentTypes={['text', 'text', 'text', 'text', 'text', 'text']}
-                            headings={Object.entries(StatusNew).map((item) => item[1])}
-                            rows={[]}
-                            verticalAlign="middle"
-                        />
-                    </Card>
-                </Layout.Section>
+                <ShipmentsOverview />
 
                 <Layout.Section>
                     <Card sectioned>

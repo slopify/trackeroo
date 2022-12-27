@@ -91,8 +91,8 @@ const Settings: React.FC = () => {
 
                         <Layout.Section><SettingDeliveryDate
                             onChange={onChangeCheckbox}
-                            startDays={''}
-                            endDays={''}
+                            startDays={5}
+                            endDays={15}
                             selected={''}
                             label="Estimated Delivery Time"
                             switcherLabel="Manual estimated delivery time"
@@ -102,34 +102,6 @@ const Settings: React.FC = () => {
                             noAccess={false}
                             description="Use a manual estimated delivery time when it’s unavailable from the courier."
                         /></Layout.Section>
-
-
-
-                        <Layout.Section>
-                            <Card sectioned title="Translations">
-                                <p><b>Change the language strings shown to your customers on the tracking page.</b></p>
-                                <Card.Section></Card.Section>
-                                <Grid>
-                                    {TRANSLATION_FIELDS.map(({ label, key }, i) => (
-                                        <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 6, xl: 6 }} key={key}>
-                                            <TextField
-                                                autoComplete="off"
-                                                label={label}
-                                                name={key}
-                                                value={'values.translations[i].value'}
-                                                onChange={(value) =>
-                                                    console.log(value)
-                                                    // setFieldValue(`translations.${i}`, {
-                                                    //     key: values.translations[i].key,
-                                                    //     value,
-                                                    // })
-                                                }
-                                            />
-                                        </Grid.Cell>
-                                    ))}
-                                </Grid>
-                            </Card>
-                        </Layout.Section>
                     </Form>
                 </Layout.Section>
                 <Layout.Section>

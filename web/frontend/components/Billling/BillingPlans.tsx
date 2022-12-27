@@ -2,6 +2,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Badge, Stack } from '@shopify/polaris';
 import { BILLING_PLANS } from '../../constants/constants';
+import { useWindowDimensions } from '../../hooks'
 
 import BillingCard from './BillingCard';
 
@@ -91,6 +92,7 @@ const BillingPlans: React.FC<TBillingPlansProps> = ({ isFirstTime = true, active
     // we need to send billing to shopify
     const [createPlan] = ['figure out billing'];
     const [loadingParams, setLoadingParams] = useState({ plan: '', loading: false });
+    const { height, width } = useWindowDimensions();
 
     const handleAction = () => {
         // make the plan
@@ -100,22 +102,42 @@ const BillingPlans: React.FC<TBillingPlansProps> = ({ isFirstTime = true, active
 
     const plans = useMemo(() => getExpendedBillingPlans(isFirstTime), [isFirstTime]);
 
-    return (
-        <Stack>
-            {plans.map((plan) => (
-                <BillingCard
-                    key={plan.title}
-                    {...plan}
-                    button={{
-                        onAction: () => handleAction(plan.name),
-                        loading: loadingParams.plan === plan.name,
-                        disabled: Boolean(loadingParams.plan) && loadingParams.plan !== plan.name,
-                        content: getButtonContent(isFirstTime, activePlan, plan.title),
-                        active: plan.title === activePlan,
-                    }}
-                />
-            ))}
-        </Stack>
+    return (<>
+        {width < 500 &&
+            <Stack>
+                <div style={{ justifyContent: 'center' }}>
+                    {plans.map((plan) => (
+                        <BillingCard
+                            key={plan.title}
+                            {...plan}
+                            button={{
+                                onAction: () => handleAction(plan.name),
+                                loading: loadingParams.plan === plan.name,
+                                disabled: Boolean(loadingParams.plan) && loadingParams.plan !== plan.name,
+                                content: getButtonContent(isFirstTime, activePlan, plan.title),
+                                active: plan.title === activePlan,
+                            }}
+                        />
+                    ))}
+                </div>
+            </Stack>}
+        {width >= 500 &&
+            <Stack>
+                {plans.map((plan) => (
+                    <BillingCard
+                        key={plan.title}
+                        {...plan}
+                        button={{
+                            onAction: () => handleAction(plan.name),
+                            loading: loadingParams.plan === plan.name,
+                            disabled: Boolean(loadingParams.plan) && loadingParams.plan !== plan.name,
+                            content: getButtonContent(isFirstTime, activePlan, plan.title),
+                            active: plan.title === activePlan,
+                        }}
+                    />
+                ))}
+            </Stack>}
+    </>
 
     );
 };

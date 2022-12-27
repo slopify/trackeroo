@@ -9,7 +9,6 @@ const IntercomInitializer = () => {
         url: '/api/user'
     });
     const { boot } = useIntercom();
-    console.log(process.env)
 
     useEffect(() => {
         if (!shop?.domain || loading) return;

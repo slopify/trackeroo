@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, TextField } from '@shopify/polaris';
+import { Select, TextField, FormLayout } from '@shopify/polaris';
 import { ESTIMATE_DELIVERY_DATE_OPTIONS } from '../../constants/constants'
 
 interface SettingDeliveryDateCardProps {
@@ -17,6 +17,30 @@ interface SettingDeliveryDateCardProps {
     selected: string;
 }
 
+const styles = {
+    Container: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        maxWidth: '620px',
+        alignItems: 'center',
+    },
+    CustomTextField: {
+        maxWidth: '122px',
+        marginRight: '25px',
+        color: '#202223',
+    },
+    CustomSelectField: {
+        maxWidth: '150px',
+    },
+    CustomSpan: {
+        letterSpacing: '0.2px',
+        fontWeight: 'bold',
+        margin: '5px'
+    }
+}
+
+
+
 const SettingDeliveryDateDatepicker: React.FC<SettingDeliveryDateCardProps> = ({
     disabled,
     onChange,
@@ -25,36 +49,44 @@ const SettingDeliveryDateDatepicker: React.FC<SettingDeliveryDateCardProps> = ({
     selected,
 }) => {
     return (
-        <div>
-            <span>Estimated delivery time is: </span>
-            <TextField
-                value={startDays}
-                label='startDate'
-                suffix="days"
-                onChange={onChange}
-                name="deliveryDateStartDays"
-                disabled={disabled}
-                autoComplete='false'
-            />
-            <span>to</span>
-            <TextField
-                value={endDays}
-                suffix="days"
-                name="deliveryDateEndDays"
-                onChange={onChange}
-                disabled={disabled}
-                label='endDate'
-                autoComplete='false'
-            />
-            <span>from</span>
-            <Select
-                label=""
-                value={selected}
-                options={ESTIMATE_DELIVERY_DATE_OPTIONS}
-                name="deliveryDateFrom"
-                disabled={disabled}
-                onChange={(val) => onChange('deliveryDateFrom', val)}
-            />
+        <div style={styles.Container}>
+            <span style={styles.CustomSpan}> Est delivery time is from: </span>
+            <div style={styles.CustomTextField}>
+                <TextField
+                    value={startDays}
+                    type="number"
+                    suffix="days"
+                    name="deliveryDateStartDays"
+                    label=""
+                    autoComplete='false'
+                    onChange={onChange}
+                    disabled={disabled}
+                />
+            </div>
+            <span style={styles.CustomSpan}>to</span>
+            <div style={styles.CustomTextField}>
+                <TextField
+                    value={endDays}
+                    type="number"
+                    suffix="days"
+                    name="deliveryDateEndDays"
+                    label=""
+                    autoComplete='false'
+                    onChange={onChange}
+                    disabled={disabled}
+                /></div>
+
+            <span style={styles.CustomSpan}>from</span>
+            <div style={styles.CustomSelectField}>
+                <Select
+                    label=""
+                    value={selected}
+                    options={ESTIMATE_DELIVERY_DATE_OPTIONS}
+                    name="deliveryDateFrom"
+                    disabled={disabled}
+                    onChange={(val) => onChange('deliveryDateFrom', val)}
+                />
+            </div>
         </div>
     );
 };

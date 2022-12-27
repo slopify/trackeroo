@@ -13,6 +13,7 @@ const Tutorials: React.FC = () => {
                     </Heading>
                 </Layout.Section>
                 <Layout.Section>
+                    <div style={{margin: '5pt'}}>
                 <MediaCard
                     size="small"
                     title="How do I add Trackeroo to my store?"
@@ -35,6 +36,7 @@ const Tutorials: React.FC = () => {
                         thumbnailUrl="https://firebasestorage.googleapis.com/v0/b/dhruv-41f3f.appspot.com/o/v_thumbnail.png?alt=media&token=a46f4243-605b-4e92-8087-6937531dc377"
                     />
                 </MediaCard>
+                
 
                 <MediaCard
                     size="small"
@@ -58,6 +60,7 @@ const Tutorials: React.FC = () => {
                         thumbnailUrl="https://firebasestorage.googleapis.com/v0/b/dhruv-41f3f.appspot.com/o/v_thumbnail.png?alt=media&token=a46f4243-605b-4e92-8087-6937531dc377"
                     />
                 </MediaCard>
+                </div>
                 </Layout.Section>
             </Layout>
         </Page>

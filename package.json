@@ -24,6 +24,7 @@
     "express": "^4.18.2",
     "graphql": "^15.8.0",
     "mongoose": "^6.8.0",
+    "mongoose-paginate-v2": "^1.7.1",
     "react-chartkick": "^0.5.3",
     "react-use-intercom": "^2.0.0",
     "type-graphql": "^1.1.1"
