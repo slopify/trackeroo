@@ -2,7 +2,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Badge, Stack } from '@shopify/polaris';
 import { BILLING_PLANS } from '../../constants/constants';
-import { useWindowDimensions } from '../../hooks'
+import { useWindowDimensions, useAppQuery } from '../../hooks'
 
 import BillingCard from './BillingCard';
 
@@ -98,6 +98,9 @@ const BillingPlans: React.FC<TBillingPlansProps> = ({ isFirstTime = true, active
         // make the plan
         // register the user for the plan
         console.log('signing up for plan...')
+        const { isLoading, error, data } = useAppQuery({
+            url: '/api/user'
+        });
     };
 
     const plans = useMemo(() => getExpendedBillingPlans(isFirstTime), [isFirstTime]);

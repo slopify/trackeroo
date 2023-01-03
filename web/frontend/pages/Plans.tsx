@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Page, Layout, TextContainer, Spinner } from "@shopify/polaris";
+import { Card, Page, Layout, Banner, Spinner } from "@shopify/polaris";
 import { useAppQuery } from "../hooks";
 import { useWindowDimensions } from '../hooks'
 import Heading from '../components/Plans/Heading';
@@ -8,7 +8,6 @@ import PlanTableMobile from '../components/Plans/PlanTableMobile';
 import BillingPlans from '../components/Billling/BillingPlans';
 import { isAfter } from 'date-fns';
 
-//import { ShopBillingDetails } from '../../../server/schemas/Shop';
 
 interface TGetBillingDetails {
     shopBillingDetails: any;
@@ -20,8 +19,6 @@ const Plan: React.FC = () => {
     const { isLoading, error, data } = useAppQuery({
         url: '/api/user'
     });
-
-    console.log(data)
 
     if (isLoading) return (<Page fullWidth>
         <Layout>
@@ -38,36 +35,48 @@ const Plan: React.FC = () => {
             </div>
         </Layout>
     </Page >);
+
     let isFirstTime = true;
-    if (data?.shopBillingDetails?.billing?.plan) {
+    if (data?.billing?.plan) {
         isFirstTime = false;
     }
+
+    const needsBillingBanner = () => {
+        return (<div style={{ display: 'flex', justifyContent: 'center', alignContent: "center", width: '100%' }}><Banner
+            title="You must sign up for a plan to use the app."
+            status="info">
+        </Banner></div>
+        )
+    };
 
     return (
         <Page fullWidth>
             <Layout>
                 <Layout.Section>
                     <Heading element="h1" color="#121212">
-                    <div style={{ paddingLeft: '5pt'}}>
-                        Current Plan
-                    </div>
+                        <div style={{ paddingLeft: '5pt' }}>
+                            Current Plan
+                        </div>
                     </Heading>
                 </Layout.Section>
-                <Layout.Section >
-                    {width < 500 ? <PlanTableMobile
-                        plan={data?.billing?.plan}
-                        shipments={2}
-                        isTrial={isAfter(new Date(data?.billing?.trialEnd), new Date())}
-                    /> :
-                        <Card>
-                            <PlanTable
-                                plan={data?.billing?.plan}
-                                shipments={2}
-                                isTrial={isAfter(new Date(data?.billing?.trialEnd), new Date())}
-                            />
-                        </Card>
-                    }
-                </Layout.Section>
+                {isFirstTime && needsBillingBanner()}
+                {!isFirstTime &&
+                    <Layout.Section >
+                        {width < 500 ? <PlanTableMobile
+                            plan={data?.billing?.plan}
+                            shipments={2}
+                            isTrial={isAfter(new Date(data?.billing?.trialEnd), new Date())}
+                        /> :
+                            <Card>
+                                <PlanTable
+                                    plan={data?.billing?.plan}
+                                    shipments={2}
+                                    isTrial={isAfter(new Date(data?.billing?.trialEnd), new Date())}
+                                />
+                            </Card>
+                        }
+                    </Layout.Section>
+                }
 
                 <Layout.Section>
                     {width < 500 ?
