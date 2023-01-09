@@ -45,6 +45,7 @@ export enum Status {
   }
   
   export enum StatusNew {
+    WAITING_ON_FULFILLMENT = 'Waiting On Fulfillment',
     INFO_RECEIVED = 'Info Received',
     IN_TRANSIT = 'In Transit',
     OUT_FOR_DELIVERY = 'Out For Delivery',

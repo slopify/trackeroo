@@ -24,21 +24,34 @@ export const ShipmentsOverview = () => {
         url: '/api/shipments-overview'
     });
 
-    console.log(shipments)
+    const shipmentCategoryCounts = [0, 0, 0, 0, 0, 0, 0, 0]
+    if (!loading) {
+        for (const shipment of shipments) {
+            const status = shipment?.fulfillment?.currentStep;
+            switch (status) {
+                case 'Waiting For Fulfilllment':
+                    shipmentCategoryCounts[0]++;
+                    break;
+                case 'Processing Shipment':
+                    shipmentCategoryCounts[1]++;
+            }
+        }
+    }
 
     return (
         <Layout.Section>
             <Card sectioned>
-                <Heading>Shipment Overview</Heading>
+                <Heading>Shipments Overview</Heading>
+                Last 30 days
                 {loading ? (
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <Spinner />
                     </div>
                 ) : (
                     <DataTable
-                        columnContentTypes={['text', 'text', 'text', 'text', 'text', 'text']}
+                        columnContentTypes={['text', 'text', 'text', 'text', 'text', 'text', 'text']}
                         headings={Object.entries(StatusNew).map((item) => item[1])}
-                        rows={[]}
+                        rows={[shipmentCategoryCounts]}
                         verticalAlign="middle"
                     />)}
             </Card>
