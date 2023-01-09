@@ -8,6 +8,7 @@ import { DeliveryMethod } from "@shopify/shopify-api";
 import 'dotenv/config'
 import { storeEndpoints } from './api/user'
 import { shipmentEndpoints } from "./api/shipment";
+import { handleOrderFulfilled, handleOrderCreated, handleOrderUpdated } from './webhookHandlers/orders'
 // import { DataType } from '@shopify/shopify-api';
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
@@ -20,6 +21,15 @@ const STATIC_PATH =
 const app = express();
 
 setUpShopify().then((shopify) => {
+
+    // Set up Shopify authentication and webhook handling
+    app.get(shopify.config.auth.path, shopify.auth.begin());
+    app.get(
+        shopify.config.auth.callbackPath,
+        shopify.auth.callback(),
+        shopify.redirectToShopifyOrAppRoot()
+    );
+
     const webhookHandlers = {
         CUSTOMERS_DATA_REQUEST: {
             deliveryMethod: DeliveryMethod.Http,
@@ -49,46 +59,83 @@ setUpShopify().then((shopify) => {
             deliveryMethod: DeliveryMethod.Http,
             callbackUrl: shopify.config.webhooks.path,
             callback: async (topic, shop, body, webhookId) => {
+                console.log(" -- ORDER CREATE --")
                 const payload = JSON.parse(body);
-                console.log('order creation webhook hit')
+                const requiredPayload = {
+                    domain: shop,
+                    orderId: payload.id,
+                    customerEmail: payload?.customer?.email,
+                    orderNumber: payload?.order_number,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                    price: payload?.subtotal_price,
+                    fufillmentStatus: payload?.fulfillment_status,
+                    orderUrl: payload?.order_status_url,
+                    fulfillments: payload?.fulfillments,
+                    lineItems: payload?.line_items,
+                    cancelledAt: null,
+                    cancelledReason: null,
+                }
+                handleOrderCreated(requiredPayload);
+
+
             }
         },
-        ORDERS_UPDATE: {
+        ORDERS_UPDATED: {
             deliveryMethod: DeliveryMethod.Http,
             callbackUrl: shopify.config.webhooks.path,
             callback: async (topic, shop, body, webhookId) => {
+                console.log(" -- ORDER UPDATED --")
+                if (!body) return;
                 const payload = JSON.parse(body);
-                console.log('order update webhook hit')
+                const requiredPayload = {
+                    domain: shop,
+                    orderId: payload.id,
+                    customerEmail: payload?.customer?.email,
+                    orderNumber: payload?.order_number,
+                    createdAt: payload?.created_at,
+                    updatedAt: new Date(),
+                    price: payload?.subtotal_price,
+                    fufillmentStatus: payload?.fulfillment_status,
+                    orderUrl: payload?.order_status_url,
+                    fulfillments: payload?.fulfillments,
+                    lineItems: payload?.line_items,
+                    cancelledAt: payload?.cancelled_at,
+                    cancelledReason: payload?.cancel_reason,
+                }
+                handleOrderUpdated(requiredPayload);
+            }
+        },
+        ORDERS_FULFILLED: {
+            deliveryMethod: DeliveryMethod.Http,
+            callbackUrl: shopify.config.webhooks.path,
+            callback: async (topic, shop, body, webhookId) => {
+                console.log(" -- ORDER FULFILLED --")
+                const payload = JSON.parse(body);
+                console.log("PAYLOAD: ", payload.fulfillments)
+                for (const fulfillment of payload.fulfillments) {
+                    const requiredPayload = {
+                        domain: shop,
+                        fulfillmentId: fulfillment?.id,
+                        orderId: fulfillment?.order_id,
+                        trackingNumber: fulfillment.tracking_number,
+                        trackingUrl: fulfillment.tracking_url,
+                        courier: fulfillment.tracking_company,
+                        shipmentStatus: fulfillment.shipment_status,
+                        createdAt: fulfillment.created_at,
+                        updatedAt: fulfillment.updated_at,
+                    }
+                    handleOrderFulfilled(requiredPayload);
+                }
             }
         },
 
+
     };
-    // Set up Shopify authentication and webhook handling
     app.post(
         shopify.config.webhooks.path,
         shopify.processWebhooks({ webhookHandlers })
-      );
-
-    app.get(shopify.config.auth.path, shopify.auth.begin());
-    app.get(
-        shopify.config.auth.callbackPath,
-        async (req, res) => {
-            console.log('REGISTERING WEBHOOKS')
-            const response = await shopify.api.webhooks.register({ session: res.locals.shopify.session })
-            console.log(response);
-            await shopify.auth.callback()
-        }
-        ,
-        shopify.redirectToShopifyOrAppRoot()
     );
-
-
-    // console.log(shopify)
-
-    // app.post(
-    //     shopify.config.webhooks.path + '/orders',
-    //     shopify.processWebhooks({ webhookHandlers: OrderWebhookHandlers as any })
-    // );
 
     // All endpoints after this point will require an active session
     app.use("/api/*", shopify.validateAuthenticatedSession());

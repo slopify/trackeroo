@@ -112,7 +112,7 @@ const FullscreenEditor = () => {
                 </div>
                 <div style={{ display: 'flex' }}>
                     <iframe width="50%" height="500" id="gmap_canvas" src={`https://maps.google.com/maps?q=${address}&ie=UTF8&iwloc=&output=embed`} frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" />
-                    <div styles={{ width: '50%', height: "500" }}>
+                    <div style={{ width: '50%', height: "500" }}>
                         <div style={styles.header}>Order Number: {orderNum}</div>
                         <div style={styles.productContent}>
                             <div><img height='100pt' src={productImageSrc} /></div>
